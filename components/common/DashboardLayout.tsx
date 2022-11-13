@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button, Col, Container, Nav, Row } from "react-bootstrap";
 import { AppNavbar } from "../../components/common/AppNavbar";
 
@@ -19,13 +20,48 @@ export default function DashboardLayout({
             <h1 className="text-center my-5">Dashboard</h1>
 
             <Nav className="flex-column mt-5">
-              <Nav.Link href="/dashboard/parking_lot">Parking Lot</Nav.Link>
-              <Nav.Link href="/dashboard/car">Car</Nav.Link>
-              <Nav.Link href="/dashboard/reservation">Reservation</Nav.Link>
-              <Nav.Link href="/dashboard/payment">Payment</Nav.Link>
-              <Nav.Link href="/dashboard/user">User</Nav.Link>
-              <Nav.Link href="/dashboard/chat">Chat</Nav.Link>
-              <Nav.Link href="/dashboard/setting">Setting</Nav.Link>
+              <Link
+                href="/dashboard/parking_lot"
+                className="my-2 ms-5 font-weight-bold"
+              >
+                Parking Lot
+              </Link>
+              <Link
+                href="/dashboard/chat"
+                className="my-2 ms-5 font-weight-bold"
+              >
+                Chat
+              </Link>
+              <Link
+                href="/dashboard/car"
+                className="my-2 ms-5 font-weight-bold"
+              >
+                Car
+              </Link>
+              <Link
+                href="/dashboard/reservation"
+                className="my-2 ms-5 font-weight-bold"
+              >
+                Reservation
+              </Link>
+              <Link
+                href="/dashboard/payment"
+                className="my-2 ms-5 font-weight-bold"
+              >
+                Payment
+              </Link>
+              <Link
+                href="/dashboard/user"
+                className="my-2 ms-5 font-weight-bold"
+              >
+                User
+              </Link>
+              <Link
+                href="/dashboard/setting"
+                className="my-2 ms-5 font-weight-bold"
+              >
+                Setting
+              </Link>
             </Nav>
 
             <Button variant="dark" size="lg" className="mt-5 mx-auto w-100">

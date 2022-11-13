@@ -2,7 +2,7 @@ import { ICar } from "./car.service";
 import { FetcherWrapper } from "./fetcher.wrapper";
 import { PaginationOptions } from "./pagination";
 import { IParkingLot } from "./parking-lot.service";
-import { IUserFull } from "./user.service";
+import { IUserShareable } from "./user.service";
 
 export interface IReservation {
   reservation_end_time: string;
@@ -14,7 +14,7 @@ export interface IReservationResult {
   car: ICar;
   parking_lot: IParkingLot;
   reservation: IReservation;
-  user: IUserFull;
+  user: IUserShareable;
 }
 
 export class ReservationService {

@@ -1,6 +1,6 @@
 import { FetcherWrapper } from "./fetcher.wrapper";
 import { PaginationOptions } from "./pagination";
-import { IUserFull } from "./user.service";
+import { IUserShareable } from "./user.service";
 
 export interface IInvoice {
   invoice_charge_amount: number;
@@ -13,7 +13,7 @@ export interface IInvoice {
 
 export interface IPaymentResult {
   invoice: IInvoice;
-  user: IUserFull;
+  user: IUserShareable;
 }
 
 export class PaymentService {

@@ -1,10 +1,10 @@
 import { FetcherWrapper } from "./fetcher.wrapper";
 import { PaginationOptions } from "./pagination";
-import { IUserFull } from "./user.service";
+import { IUserShareable } from "./user.service";
 
 export interface ICarPaginationResult {
   car: ICar;
-  user: IUserFull;
+  user: IUserShareable;
 }
 
 export interface ICar {
