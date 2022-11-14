@@ -4,7 +4,7 @@ import { AppNavbar } from "../../components/common/AppNavbar";
 
 export interface DashboardLayoutProps {
   headerName?: string;
-  children: JSX.Element[];
+  children: JSX.Element | JSX.Element[];
 }
 
 export default function DashboardLayout({
