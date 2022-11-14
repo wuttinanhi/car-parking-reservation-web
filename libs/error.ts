@@ -1,3 +1,6 @@
+export type FetchErrorRecord = { [key: string]: string[] };
+
+
 export class FetchError extends Error {
   public json: any;
 
