@@ -13,7 +13,7 @@ export interface UpdateUserDialogProps {
 
 export function UpdateUserDialog({ user, onChange }: UpdateUserDialogProps) {
   const [formData, setFormData] = useState(changeDataPrefix(user, false));
-  const [errMsg, setErrMsg] = useState<any>(null);
+  const [error, setError] = useState<any>(null);
   const [showUpdateDialog, setShowUpdateDialog] = useState(false);
 
   function changeDataPrefix(data: any, add: boolean) {
@@ -51,12 +51,11 @@ export function UpdateUserDialog({ user, onChange }: UpdateUserDialogProps) {
       await service.update(newData);
 
       setShowUpdateDialog(false);
-      setErrMsg(null);
+      setError(null);
       onChange && onChange(changeDataPrefix(newData, true));
     } catch (err) {
       if (err instanceof FetchError) {
-        const strJson = JSON.stringify(err.getJson());
-        setErrMsg(strJson);
+        setError(err);
       }
     }
   }
@@ -68,14 +67,14 @@ export function UpdateUserDialog({ user, onChange }: UpdateUserDialogProps) {
       </Button>
 
       <DataDialog
-        title="Update Invoice"
+        title="Update User"
         inputTypes={inputTypes}
         show={showUpdateDialog}
         formData={formData}
         onHide={() => setShowUpdateDialog(false)}
         onFormChange={(data) => setFormData(data)}
         onSubmit={onSubmit}
-        errorMessage={errMsg}
+        errorMessage={error}
       ></DataDialog>
     </>
   );

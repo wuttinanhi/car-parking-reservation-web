@@ -3,7 +3,7 @@ import Alert from "react-bootstrap/Alert";
 import { FetchError, FetchErrorRecord } from "../../libs/error";
 
 export interface IErrorRenderProps {
-  error: Error | null;
+  error: any;
 }
 
 export function ErrorRender({ error }: IErrorRenderProps) {
@@ -15,7 +15,11 @@ export function ErrorRender({ error }: IErrorRenderProps) {
     function renderError() {
       if (!error) return;
 
-      if (error instanceof FetchError) {
+      // check is error is string
+      if (typeof error === "string") {
+        setErrorHeader("Error");
+        setErrorBody(error);
+      } else if (error instanceof FetchError) {
         const json: FetchErrorRecord = error.getJson();
         // loop key and value
         let buffer = [];
@@ -45,7 +49,7 @@ export function ErrorRender({ error }: IErrorRenderProps) {
       dismissible
       show={show}
     >
-      <Alert.Heading>{errorHeader}</Alert.Heading>
+      <h5>{errorHeader}</h5>
       <pre>{errorBody}</pre>
     </Alert>
   );

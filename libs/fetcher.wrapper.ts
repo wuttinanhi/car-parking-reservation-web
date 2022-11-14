@@ -42,7 +42,7 @@ export class FetcherWrapper {
     return json;
   }
 
-  async get(url: string, params: any) {
+  async get(url: string, params?: any) {
     return this.fetchFactory("GET", url, params);
   }
 

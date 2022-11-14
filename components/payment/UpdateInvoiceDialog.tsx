@@ -16,7 +16,7 @@ export function UpdateInvoiceDialog({
   onChange,
 }: UpdateInvoiceDialogProps) {
   const [formData, setFormData] = useState(changeDataPrefix(invoice, false));
-  const [errMsg, setErrMsg] = useState<any>(null);
+  const [error, setError] = useState<any>(null);
   const [showUpdateDialog, setShowUpdateDialog] = useState(false);
 
   function changeDataPrefix(data: any, add: boolean) {
@@ -54,12 +54,11 @@ export function UpdateInvoiceDialog({
       await service.updateInvoice(newData);
 
       setShowUpdateDialog(false);
-      setErrMsg(null);
+      setError(null);
       onChange && onChange(changeDataPrefix(newData, true));
     } catch (err) {
       if (err instanceof FetchError) {
-        const strJson = JSON.stringify(err.getJson());
-        setErrMsg(strJson);
+        setError(err);
       }
     }
   }
@@ -78,7 +77,7 @@ export function UpdateInvoiceDialog({
         onHide={() => setShowUpdateDialog(false)}
         onFormChange={(data) => setFormData(data)}
         onSubmit={onSubmit}
-        errorMessage={errMsg}
+        errorMessage={error}
       ></DataDialog>
     </>
   );

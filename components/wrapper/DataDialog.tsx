@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Alert, Button, Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
+import { ErrorRender } from "./ErrorRender";
 import { FormWrapper, IFormWrapperProps } from "./FormWrapper";
 
 export interface IDataDialogProps extends IFormWrapperProps {
@@ -37,15 +38,6 @@ export function DataDialog({
     onFormChange && onFormChange(data);
   }
 
-  function renderError() {
-    if (!errorMessage) return null;
-    return (
-      <Alert variant="danger" className="my-2">
-        {errorMessage}
-      </Alert>
-    );
-  }
-
   return (
     <>
       <Modal
@@ -62,13 +54,13 @@ export function DataDialog({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <ErrorRender error={errorMessage} />
+
           <FormWrapper
             inputTypes={inputTypes}
             formData={formData}
             onFormChange={internalFormChange}
           />
-
-          {renderError()}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary fw-bold" onClick={() => internalSubmit()}>
