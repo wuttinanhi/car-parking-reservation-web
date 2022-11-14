@@ -1,3 +1,5 @@
+import { FetchError } from "./error";
+
 export class FetcherWrapper {
   private baseUrl: string;
   private apiKey: string;
@@ -13,54 +15,46 @@ export class FetcherWrapper {
     }).toString()}`;
   }
 
-  async get(url: string, params: any) {
+  private async fetchFactory(
+    method: string,
+    url: string,
+    params?: any,
+    body?: any
+  ) {
     const response = await fetch(this.urlMaker(url, params), {
-      method: "GET",
+      method,
       headers: {
         "Content-Type": "application/json",
         "x-api-key": this.apiKey,
       },
+      body: JSON.stringify(body),
     });
 
-    return await response.json();
+    // parse json
+    const json = await response.json();
+
+    // if response is not ok, throw an error
+    if (!response.ok) {
+      throw new FetchError(json);
+    }
+
+    // if response is ok, return the json
+    return json;
+  }
+
+  async get(url: string, params: any) {
+    return this.fetchFactory("GET", url, params);
   }
 
   async post(url: string, body: any) {
-    const response = await fetch(this.urlMaker(url), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": this.apiKey,
-      },
-      body: JSON.stringify(body),
-    });
-
-    return await response.json();
+    return this.fetchFactory("POST", url, null, body);
   }
 
   async patch(url: string, body: any) {
-    const response = await fetch(this.urlMaker(url), {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": this.apiKey,
-      },
-      body: JSON.stringify(body),
-    });
-
-    return await response.json();
+    return this.fetchFactory("PATCH", url, null, body);
   }
 
   async delete(url: string, body: any) {
-    const response = await fetch(this.urlMaker(url), {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": this.apiKey,
-      },
-      body: JSON.stringify(body),
-    });
-
-    return await response.json();
+    return this.fetchFactory("DELETE", url, null, body);
   }
 }

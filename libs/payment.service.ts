@@ -1,3 +1,4 @@
+import { IUpdateInvoice } from "./common.types";
 import { FetcherWrapper } from "./fetcher.wrapper";
 import { PaginationOptions } from "./pagination";
 import { IUserShareable } from "./user.service";
@@ -9,6 +10,7 @@ export interface IInvoice {
   invoice_reservation_id: number;
   invoice_status: string;
   invoice_user_id: number;
+  invoice_description: string;
 }
 
 export interface IPaymentResult {
@@ -21,5 +23,9 @@ export class PaymentService {
 
   pagination(opts: PaginationOptions) {
     return this.fetcher.get("/payment/admin/list", opts);
+  }
+
+  updateInvoice(data: IUpdateInvoice) {
+    return this.fetcher.patch("/payment/admin/update", data);
   }
 }
