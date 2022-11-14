@@ -14,9 +14,9 @@ export default function DashboardLayout({
   return (
     <>
       <AppNavbar />
-      <Container fluid>
-        <Row>
-          <Col md={2} className="vh-100 bg-light">
+      <Container fluid className="m-0 p-0">
+        <Row className="m-0 p-0">
+          <Col md={2} className="vh-100 bg-light m-0 p-0">
             <h1 className="text-center my-5">Dashboard</h1>
 
             <Nav className="flex-column mt-5">
@@ -64,15 +64,26 @@ export default function DashboardLayout({
               </Link>
             </Nav>
 
-            <Button variant="dark" size="lg" className="mt-5 mx-auto w-100">
-              Logout
-            </Button>
+            <div className="d-flex justify-content-center mt-5 mx-5">
+              <Button variant="dark" size="lg" className="mt-5 w-100">
+                Logout
+              </Button>
+            </div>
           </Col>
 
-          <Col md={10} className="vh-100 h-100">
-            <div className="m-2 mx-5">
-              {headerName && <h1 className="my-5">{headerName}</h1>}
-              {children}
+          <Col md={10} className="vh-100 h-100 m-0 p-0">
+            <div
+              style={{
+                overflow: "scroll",
+                height: "100%",
+                overflowX: "hidden",
+                overflowY: "auto",
+              }}
+            >
+              <div className="m-2 mx-5">
+                {headerName && <h1 className="my-5">{headerName}</h1>}
+                {children}
+              </div>
             </div>
           </Col>
         </Row>
