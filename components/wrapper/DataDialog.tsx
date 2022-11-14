@@ -71,7 +71,7 @@ export function DataDialog({
           {renderError()}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger fw-bold" onClick={() => internalSubmit()}>
+          <Button variant="primary fw-bold" onClick={() => internalSubmit()}>
             Confirm
           </Button>
           <Button variant="outline-secondary" onClick={() => internalHide()}>

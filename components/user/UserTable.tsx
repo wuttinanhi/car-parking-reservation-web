@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BaseService } from "../../libs/base.service";
 import { IUserFull, UserService } from "../../libs/user.service";
 import { SearchTable } from "../wrapper/SearchTable";
@@ -8,16 +9,22 @@ interface UserTableRowProps {
 }
 
 function UserTableRow({ item }: UserTableRowProps) {
+  const [user, setUser] = useState(item);
+
+  function onChange(data: any) {
+    setUser((prev) => ({ ...prev, ...data }));
+  }
+
   return (
     <tr>
-      <td>{item.user_id}</td>
+      <td>{user.user_id}</td>
       <td>
-        {item.user_firstname} {item.user_lastname}
+        {user.user_firstname} {user.user_lastname}
       </td>
-      <td>{item.user_email}</td>
-      <td>{item.user_phone_number}</td>
+      <td>{user.user_email}</td>
+      <td>{user.user_phone_number}</td>
       <td>
-        <UpdateUserDialog />
+        <UpdateUserDialog user={user} onChange={onChange} />
       </td>
     </tr>
   );

@@ -21,6 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <title>Car Parking Reservation System</title>
       <Component {...pageProps} />
     </>
   );

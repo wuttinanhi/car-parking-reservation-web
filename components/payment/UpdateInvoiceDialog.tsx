@@ -54,6 +54,7 @@ export function UpdateInvoiceDialog({
       await service.updateInvoice(newData);
 
       setShowUpdateDialog(false);
+      setErrMsg(null);
       onChange && onChange(changeDataPrefix(newData, true));
     } catch (err) {
       if (err instanceof FetchError) {
