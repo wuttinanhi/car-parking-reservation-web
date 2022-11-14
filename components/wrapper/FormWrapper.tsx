@@ -31,7 +31,6 @@ export function FormWrapper({
   formData,
 }: IFormWrapperProps) {
   const [data, setData] = useState<any>(formData);
-  const [form, setForm] = useState<any>(null);
 
   function setDataField(e: ChangeEvent<any>, inputType: IInputType) {
     // get data tag data-api-field
@@ -53,6 +52,7 @@ export function FormWrapper({
           type="checkbox"
           label={input.header}
           data-api-field={input.apiField}
+          checked={data[input.apiField] ?? false}
           onChange={(e) => setDataField(e, input)}
           key={input.apiField}
         />
@@ -65,6 +65,7 @@ export function FormWrapper({
             as="textarea"
             rows={3}
             data-api-field={input.apiField}
+            value={data[input.apiField] ?? ""}
             onChange={(e) => setDataField(e, input)}
           />
         </Form.Group>
@@ -76,6 +77,7 @@ export function FormWrapper({
           <Form.Control
             type="date"
             data-api-field={input.apiField}
+            value={data[input.apiField] ?? ""}
             onChange={(e) => setDataField(e, input)}
           />
         </Form.Group>
@@ -87,6 +89,7 @@ export function FormWrapper({
           <Form.Control
             as="select"
             data-api-field={input.apiField}
+            value={data[input.apiField] ?? ""}
             onChange={(e) => setDataField(e, input)}
           >
             {input.options?.map((option) => (
@@ -105,7 +108,7 @@ export function FormWrapper({
             type={input.type}
             placeholder={input.placeholder}
             required={input.required}
-            value={data[input.apiField]}
+            value={data[input.apiField] ?? ""}
             onChange={(e) => setDataField(e, input)}
             data-api-field={input.apiField}
           />
@@ -118,17 +121,11 @@ export function FormWrapper({
     return <Form>{inputTypes.map((input) => renderInput(input))}</Form>;
   }
 
-  // first run
-  useEffect(() => {
-    // set form state
-    setForm(renderForm());
-  }, []);
-
   // trigger when data change
   useEffect(() => {
     // call onFormChange
     if (onFormChange) onFormChange(data);
   }, [data]);
 
-  return <>{form}</>;
+  return <>{renderForm()}</>;
 }

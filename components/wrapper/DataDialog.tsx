@@ -2,14 +2,14 @@ import { useState } from "react";
 import { Alert, Button, Modal } from "react-bootstrap";
 import { FormWrapper, IFormWrapperProps } from "./FormWrapper";
 
-interface IDataDialogProps {
+interface IDataDialogProps extends IFormWrapperProps {
   title?: string;
   show: boolean;
 
   onHide?: () => void;
   onSubmit?: (data: any) => void;
 
-  formWrapperProps: IFormWrapperProps;
+  errorMessage?: string;
 
   apiMethod?: "POST" | "PATCH" | "DELETE";
   apiUrl?: string;
@@ -20,12 +20,15 @@ export function DataDialog({
   onSubmit,
   onHide,
   title,
-  formWrapperProps,
   apiUrl,
   apiMethod,
+  errorMessage,
+  formData: propsFormData,
+  inputTypes,
+  onFormChange,
 }: IDataDialogProps) {
-  const [formData, setFormData] = useState<any>(formWrapperProps.formData);
-  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [formData, setFormData] = useState<any>(propsFormData);
+  const [errMsg, setErrMsg] = useState<string | null>(errorMessage ?? null);
 
   async function internalSubmit() {
     if (apiUrl && apiMethod) {
@@ -43,19 +46,24 @@ export function DataDialog({
         if (res.ok) {
           onSubmit && onSubmit(formData);
         } else {
-          setFetchError(json);
+          setErrMsg(json);
         }
       } catch (err) {
-        setFetchError((err as Error).name);
+        setErrMsg((err as Error).name);
       }
     } else {
       onSubmit && onSubmit(formData);
     }
   }
 
-  function onFormChange(data: any) {
+  async function internalHide() {
+    setErrMsg(null);
+    onHide && onHide();
+  }
+
+  function internalFormChange(data: any) {
     setFormData(data);
-    formWrapperProps.onFormChange && formWrapperProps.onFormChange(data);
+    onFormChange && onFormChange(data);
   }
 
   return (
@@ -74,26 +82,23 @@ export function DataDialog({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {fetchError && (
+          {errMsg && (
             <Alert variant="danger" className="my-2">
-              {fetchError}
+              {errMsg}
             </Alert>
           )}
+
           <FormWrapper
-            {...formWrapperProps}
-            onFormChange={(data) => onFormChange(data)}
+            inputTypes={inputTypes}
+            formData={formData}
+            onFormChange={internalFormChange}
           />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger fw-bold" onClick={() => internalSubmit()}>
             Confirm
           </Button>
-          <Button
-            variant="outline-secondary"
-            onClick={() => {
-              if (onHide) onHide();
-            }}
-          >
+          <Button variant="outline-secondary" onClick={() => internalHide()}>
             Close
           </Button>
         </Modal.Footer>
