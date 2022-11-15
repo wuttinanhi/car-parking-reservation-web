@@ -30,12 +30,12 @@ export default function DashboardLayout({
               >
                 Parking Lot
               </Link>
-              <Link
+              {/* <Link
                 href="/dashboard/chat"
                 className="my-2 ms-5 font-weight-bold"
               >
                 Chat
-              </Link>
+              </Link> */}
               <Link
                 href="/dashboard/car"
                 className="my-2 ms-5 font-weight-bold"
