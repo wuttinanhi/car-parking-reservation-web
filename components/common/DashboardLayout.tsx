@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { useContext } from "react";
 import { Button, Col, Container, Nav, Row } from "react-bootstrap";
 import { AppNavbar } from "../../components/common/AppNavbar";
+import { AuthContext } from "../auth/auth.context";
 
 export interface DashboardLayoutProps {
   headerName?: string;
@@ -11,6 +13,8 @@ export default function DashboardLayout({
   headerName,
   children,
 }: DashboardLayoutProps) {
+  const authContext = useContext(AuthContext);
+
   return (
     <>
       <AppNavbar />
@@ -65,7 +69,12 @@ export default function DashboardLayout({
             </Nav>
 
             <div className="d-flex justify-content-center mt-5 mx-5">
-              <Button variant="dark" size="lg" className="mt-5 w-100">
+              <Button
+                variant="dark"
+                size="lg"
+                className="mt-5 w-100"
+                onClick={() => authContext.logout()}
+              >
                 Logout
               </Button>
             </div>
